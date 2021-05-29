@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+  
+  * {
+     box-sizing: border-box;
+  }
+  .product-item {
+     width: 215px;
+     text-align: center;
+     margin: 0 auto;
+     border-bottom: 2px solid #F5F5F5;
+     background: rgb(255, 255, 255);
+     font-family: "Open Sans";
+     transition: .3s ease-in;
+  }
+  .product-item:hover {
+     border-bottom: 2px solid #fc5a5a;
+  }
+  .product-item img {
+     display: block;
+     width: 100%;
+  }
+  .product-list {
+     background: hsl(0, 0%, 100%);
+     padding: 15px 0;
+  }
+  .product-list h3 {
+     font-size: 18px;
+     font-weight: 400;
+     color: #444444;
+     margin: 0 0 10px 0;
+  }
+  .price {
+     font-size: 16px;
+     color: #fc5a5a;
+     display: block;
+     margin-bottom: 12px;
+  }
+  .button {
+     text-decoration: none;
+     display: inline-block;
+     padding: 0 12px;
+     background: #cccccc;
+     color: white;
+     text-transform: uppercase;
+     font-size: 12px;
+     line-height: 28px;
+     transition: .3s ease-in;
+  }
+  .product-item:hover .button {
+     background: #fc5a5a;
+  }
+  
+  .colortext {
+       color: rgb(33, 139, 165);
+       text-align : center;
+    }
+  
+  
+  
+  
+</style>
+<marquee direction="right" scrollamount="15"><img width="800" height="400" src="https://hotskidki.by/wp-content/uploads/2021/04/dominos27.04.21.jpg"/><img width="800" height="400" src="https://images.dominos.by/media/uploads/2021/03/24/__852432-min.png" /><img width="800" height="400" src="https://images.dominos.by/media/uploads/2020/10/28/___852432.png"/><img></marquee>
+
+<div class="row">
+  {% for product in object_list %}
+
+    <div class="product-item">
+      <a href="{{ product.get_absolute_url }}"><img width=250 height=250 src="{{ product.image.url }} "></a>
+      <div class="product-list">
+        <h3>{{ product.title }}</h3>
+          <span class="price">{{ product.price }} руб.</span>
+          <a href="{% url 'add_to_cart' ct_model=product.get_model_name slug=product.slug %}" class="button">В корзину</a>
+      </div>
+      </div>
+    <!-- <div class="card h-100">
+      <a href="{{ product.get_absolute_url }}"><img class="card-img-top" src="{{ product.image.url }} " alt=""></a>
+      <div class="card-body">
+        <h4 class="card-title">
+          <a href="{{ product.get_absolute_url }}">{{ product.title }}</a>
+        </h4>
+        <h5>{{ product.price }} руб.</h5>
+        <a href="{% url 'add_to_cart' ct_model=product.get_model_name slug=product.slug %}">
+          <button class="btn btn-danger">Добавить в корзину</button>
+        </a> -->
+        {% endfor %}
+      </div>
+    
+
+
+
+{% endblock content %}
