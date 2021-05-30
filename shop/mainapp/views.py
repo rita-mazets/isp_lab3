@@ -4,7 +4,8 @@ from .models import *
 
 
 def test_view(request):
-    return render(request, 'base.html', {})
+    categories = Category.objects.get_categories_for_left_sidebar()
+    return render(request, 'base.html', {'categories': categories})
 
 class ProductDetailView(DetailView):
     CT_MODEL_MODEL_CLASS={
@@ -21,3 +22,15 @@ class ProductDetailView(DetailView):
     template_name =  'product_detail.html'
     slug_url_kwarg = 'slug'
 
+class CategoryDetailView(DetailView):
+
+    model = Category
+    queryset = Category.objects.all()
+    context_object_name = 'category'
+    template_name = 'category_detail.html'
+    slug_url_kwarg = 'slug'
+
+    # def get_context_data(self, **kwargs):
+    #     context = super().get_context_data(**kwargs)
+    #     context['cart'] = self.cart
+    #     return context
