@@ -81,3 +81,20 @@ class AddToCartView(CartMixin,View):
         # recalc_cart(self.cart)
         # messages.add_message(request, messages.INFO, "Товар успешно добавлен")
         return HttpResponseRedirect('/cart/')
+
+
+class DeleteFromCartView(CartMixin, View):
+
+    def get(self, request, *args, **kwargs):
+        ct_model, product_slug = kwargs.get('ct_model'), kwargs.get('slug')
+        content_type = ContentType.objects.get(model=ct_model)
+        product = content_type.model_class().objects.get(slug=product_slug)
+        cart_product = CartProduct.objects.get(
+            user=self.cart.owner, cart=self.cart, content_type=content_type, object_id=product.id
+        )
+        self.cart.product.remove(cart_product)
+        # cart_product.delete()
+        self.cart.save()
+        # recalc_cart(self.cart)
+        # messages.add_message(request, messages.INFO, "Товар успешно удален")
+        return HttpResponseRedirect('/cart/')

@@ -11,6 +11,7 @@
       <th scope="col">Цена</th>
       <th scope="col">Кол-во</th>
       <th scope="col">Общая цена</th>
+        <th scope="col">Действие</th>
     </tr>
   </thead>
   <tbody>
@@ -21,6 +22,11 @@
       <td>{{item.content_object.price}} руб.</td>
       <td>{{item.qty}}</td>
       <td>{{ item.final_price }} руб.</td>
+        <td>
+            <a href="{% url 'delete_from_cart' ct_model=item.content_object.get_model_name slug=item.content_object.slug %}">
+                <button class="btn btn-danger">Удалить из корзины</button>
+            </a>
+          </td>
     </tr>
   {% endfor %}
 
@@ -29,7 +35,6 @@
           <td>Итого:</td>
           <td>{{ cart.total_products }}</td>
           <td><strong>{{ cart.final_price }} руб.</strong></td>
-
         </tr>
 
   </tbody>
