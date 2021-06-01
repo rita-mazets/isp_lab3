@@ -3,6 +3,7 @@
 {% block content %}
 
 <h3 class="text-center mt-5 mb-5">Ваша корзина {% if not cart.product.count %}пуста{% endif %}</h3>
+{%if cart.product.count%}
 <table class="table">
   <thead>
     <tr>
@@ -15,12 +16,19 @@
     </tr>
   </thead>
   <tbody>
-  {%for item in cart.product.all %}
-    <tr>
+  {% for item in cart.product.all %}
+  <tr>
       <th scope="row">{{item.content_object.title}}</th>
       <td class="w-25"><img src="{{ item.content_object.image.url }}" class="img-fluid"></td>
       <td>{{item.content_object.price}} руб.</td>
-      <td>{{item.qty}}</td>
+      <td>
+          <form action="{% url 'change_qty' ct_model=item.content_object.get_model_name slug=item.content_object.slug %}" method="POST">
+              {% csrf_token %}
+              <input type="number" class="form-control" name="qty" style="width: 70px;" min="1" value="{{ item.qty }}">
+              <br>
+              <input type="submit" class="btn btn-primary" value="Изменить кол-во">
+            </form>
+      </td>
       <td>{{ item.final_price }} руб.</td>
         <td>
             <a href="{% url 'delete_from_cart' ct_model=item.content_object.get_model_name slug=item.content_object.slug %}">
@@ -39,6 +47,7 @@
 
   </tbody>
 </table>
+{% endif %}
 </div>
 </div>
 {% endblock content %}
