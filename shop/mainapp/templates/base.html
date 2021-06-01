@@ -20,13 +20,6 @@
     <body>
         <!-- Header-->
         <header class="bg-dark py-5">
-<!--                    <form >-->
-<!--                        <button class="btn btn-outline-dark" type="submit">-->
-<!--                            <i class="bi-cart-fill me-1"></i>-->
-<!--                            Cart-->
-<!--                            <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>-->
-<!--                        </button>-->
-<!--                    </form>-->
 
                 <div class="text-end" sryle="margin-right:30px;">
                      <form >
@@ -60,6 +53,17 @@
 
         </div><!--/span-->
           {% block content %}
+            {% if messages %}
+            {% for message in messages %}
+              <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
+                <strong>{{ message }}</strong>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+            {% endfor %}
+             {% endif %}
+
         <!-- Section-->
         <section class="py-5">
             <div class="container px-2 px-lg-3 mt-3">
@@ -77,6 +81,7 @@
                                     <!-- Product reviews-->
                                     <!-- Product price-->
                                     {{ product.price }} руб.
+
                                 </div>
                             </div>
                             <!-- Product actions-->
