@@ -1,0 +1,33 @@
+version: '3.7'
+services:
+  web:
+    image: antonharkevich/pizza_shop_prod:v2
+    command: gunicorn pizza_shop.wsgi:application --bind 0.0.0.0:7000
+    volumes:
+      - static_volume:/home/shop-project/web_choto/staticfiles
+      - media_volume:/home/shop-project/web_choto/mediafiles
+    expose:
+    - 7000
+    env_file:
+      - ./.env.prod
+    depends_on:
+      - db
+  db:
+    image: postgres:12.0-alpine
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    env_file:
+      - ./.env.prod.db
+  nginx:
+    image: antonharkevich/pizza_shop_nginx:v2
+    volumes:
+      - static_volume:/home/shop-project/web_choto/staticfiles
+      - media_volume:/home/shop-project/web_choto/mediafiles
+    ports:
+      - 1454:80
+    depends_on:
+      - web
+volumes:
+  postgres_data:
+  static_volume:
+  media_volume:
