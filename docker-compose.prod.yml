@@ -1,7 +1,7 @@
 version: '3.7'
 services:
   web:
-    image: antonharkevich/pizza_shop_prod:v2
+    image: ritamazets/pizza_shop_prod:v2
     command: gunicorn pizza_shop.wsgi:application --bind 0.0.0.0:7000
     volumes:
       - static_volume:/home/shop-project/web_choto/staticfiles
@@ -19,7 +19,7 @@ services:
     env_file:
       - ./.env.prod.db
   nginx:
-    image: antonharkevich/pizza_shop_nginx:v2
+    image: ritamazets/pizza_shop_nginx:v2
     volumes:
       - static_volume:/home/shop-project/web_choto/staticfiles
       - media_volume:/home/shop-project/web_choto/mediafiles
